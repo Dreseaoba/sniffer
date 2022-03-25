@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBox_device = new System.Windows.Forms.ComboBox();
             this.button_device = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox_cf = new System.Windows.Forms.TextBox();
@@ -47,6 +47,8 @@
             this.Dst = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Protocol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Length = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.label_warn_device = new System.Windows.Forms.Label();
+            this.label_debug = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -58,13 +60,13 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Device";
             // 
-            // comboBox1
+            // comboBox_device
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(86, 10);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(534, 23);
-            this.comboBox1.TabIndex = 1;
+            this.comboBox_device.FormattingEnabled = true;
+            this.comboBox_device.Location = new System.Drawing.Point(86, 10);
+            this.comboBox_device.Name = "comboBox_device";
+            this.comboBox_device.Size = new System.Drawing.Size(534, 23);
+            this.comboBox_device.TabIndex = 1;
             // 
             // button_device
             // 
@@ -74,6 +76,7 @@
             this.button_device.TabIndex = 2;
             this.button_device.Text = "Confirm";
             this.button_device.UseVisualStyleBackColor = true;
+            this.button_device.Click += new System.EventHandler(this.button_device_Click);
             // 
             // label2
             // 
@@ -203,11 +206,32 @@
             this.Length.Text = "Length";
             this.Length.Width = 70;
             // 
+            // label_warn_device
+            // 
+            this.label_warn_device.AutoSize = true;
+            this.label_warn_device.ForeColor = System.Drawing.Color.Red;
+            this.label_warn_device.Location = new System.Drawing.Point(708, 13);
+            this.label_warn_device.Name = "label_warn_device";
+            this.label_warn_device.Size = new System.Drawing.Size(167, 15);
+            this.label_warn_device.TabIndex = 0;
+            this.label_warn_device.Text = "Device can\'t be void";
+            this.label_warn_device.Visible = false;
+            // 
+            // label_debug
+            // 
+            this.label_debug.AutoSize = true;
+            this.label_debug.Location = new System.Drawing.Point(334, 49);
+            this.label_debug.Name = "label_debug";
+            this.label_debug.Size = new System.Drawing.Size(95, 15);
+            this.label_debug.TabIndex = 7;
+            this.label_debug.Text = "DebugOutput";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1062, 673);
+            this.Controls.Add(this.label_debug);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.listView);
             this.Controls.Add(this.textBox_df);
@@ -219,7 +243,8 @@
             this.Controls.Add(this.button_stop);
             this.Controls.Add(this.button_start);
             this.Controls.Add(this.button_device);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.comboBox_device);
+            this.Controls.Add(this.label_warn_device);
             this.Controls.Add(this.label1);
             this.Name = "Form1";
             this.Text = "Sniffer";
@@ -232,7 +257,7 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBox_device;
         private System.Windows.Forms.Button button_device;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox_cf;
@@ -250,6 +275,8 @@
         private System.Windows.Forms.ColumnHeader Length;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label_warn_device;
+        private System.Windows.Forms.Label label_debug;
     }
 }
 
