@@ -39,14 +39,14 @@
             this.label3 = new System.Windows.Forms.Label();
             this.textBox_df = new System.Windows.Forms.TextBox();
             this.listView = new System.Windows.Forms.ListView();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.Id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Time = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Src = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Dst = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Protocol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Length = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.textBox_info = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.label_warn_device = new System.Windows.Forms.Label();
             this.label_debug = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -102,6 +102,7 @@
             this.button_start.TabIndex = 2;
             this.button_start.Text = "Start";
             this.button_start.UseVisualStyleBackColor = true;
+            this.button_start.Click += new System.EventHandler(this.button_start_Click);
             // 
             // button_stop
             // 
@@ -111,6 +112,7 @@
             this.button_stop.TabIndex = 2;
             this.button_stop.Text = "Stop";
             this.button_stop.UseVisualStyleBackColor = true;
+            this.button_stop.Click += new System.EventHandler(this.button_stop_Click);
             // 
             // button_display
             // 
@@ -158,25 +160,6 @@
             this.listView.UseCompatibleStateImageBehavior = false;
             this.listView.View = System.Windows.Forms.View.Details;
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(28, 477);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(1004, 184);
-            this.textBox1.TabIndex = 6;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(25, 459);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(103, 15);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Package Info";
-            // 
             // Id
             // 
             this.Id.Text = "Id";
@@ -184,7 +167,7 @@
             // Time
             // 
             this.Time.Text = "Time";
-            this.Time.Width = 140;
+            this.Time.Width = 210;
             // 
             // Src
             // 
@@ -205,6 +188,25 @@
             // 
             this.Length.Text = "Length";
             this.Length.Width = 70;
+            // 
+            // textBox_info
+            // 
+            this.textBox_info.Location = new System.Drawing.Point(28, 477);
+            this.textBox_info.Multiline = true;
+            this.textBox_info.Name = "textBox_info";
+            this.textBox_info.ReadOnly = true;
+            this.textBox_info.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox_info.Size = new System.Drawing.Size(1004, 184);
+            this.textBox_info.TabIndex = 6;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(25, 459);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(103, 15);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Package Info";
             // 
             // label_warn_device
             // 
@@ -232,7 +234,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1062, 673);
             this.Controls.Add(this.label_debug);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBox_info);
             this.Controls.Add(this.listView);
             this.Controls.Add(this.textBox_df);
             this.Controls.Add(this.label4);
@@ -273,7 +275,7 @@
         private System.Windows.Forms.ColumnHeader Dst;
         private System.Windows.Forms.ColumnHeader Protocol;
         private System.Windows.Forms.ColumnHeader Length;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox_info;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label_warn_device;
         private System.Windows.Forms.Label label_debug;
