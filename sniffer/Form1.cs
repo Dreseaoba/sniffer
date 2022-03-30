@@ -92,18 +92,9 @@ namespace sniffer
             string time_str = time.ToString("yyyy-MM-dd HH:mm:ss:fff");
             string length = e.Data.Length.ToString();
 
-
             Packet packet = e.GetPacket().GetPacket();
-
-
-
-            // add to the list
             capturedPackets_list.Add(packetId, packet);
-            
-
-
-            var ipPacket = packet.Extract<IPPacket>();
-
+            IPPacket ipPacket = packet.Extract<IPPacket>();
 
             if (ipPacket != null)
             {
@@ -112,8 +103,6 @@ namespace sniffer
                 string protocol_type = ipPacket.Protocol.ToString();
                 string srcIP = srcIp.ToString();
                 string dstIP = dstIp.ToString();
-
-
 
                 var protocolPacket = ipPacket.PayloadPacket;
 
@@ -124,11 +113,8 @@ namespace sniffer
                 item.SubItems.Add(protocol_type);
                 item.SubItems.Add(length);
 
-
                 Action action = () => listView.Items.Add(item);
                 listView.Invoke(action);
-
-                
             }
             packetId++;
         }
@@ -139,6 +125,117 @@ namespace sniffer
             device.StopCapture();
             device.Close();
             this.listView.Enabled = true;
+        }
+
+        private void listView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            string protocol = e.Item.SubItems[4].Text;
+            int key = Int32.Parse(e.Item.SubItems[0].Text);
+            Packet packet;
+            bool getPacket = capturedPackets_list.TryGetValue(key, out packet);
+
+            switch (protocol)
+            {
+                case "Tcp":
+                    if (getPacket)
+                    {
+                        TcpPacket tcpPacket = packet.Extract<TcpPacket>();
+                        if (tcpPacket != null)
+                        {
+                            textBox_info.Text = "Packet number: " + key +
+                                            " Type: TCP" +
+                                            "\r\nSource port:" + tcpPacket.SourcePort +
+                                            "\r\nDestination port: " + tcpPacket.DestinationPort +
+                                            "\r\nTCP header size: " + tcpPacket.DataOffset +
+                                            "\r\nWindow size: " + tcpPacket.WindowSize + 
+                                            "\r\nChecksum:" + tcpPacket.Checksum.ToString() + (tcpPacket.ValidChecksum ? ",valid" : ",invalid") +
+                                            "\r\nTCP checksum: " + (tcpPacket.ValidTcpChecksum ? "valid" : "invalid") +
+                                            "\r\nSequence number: " + tcpPacket.SequenceNumber.ToString() +
+                                            "\r\nAcknowledgment number: " + tcpPacket.AcknowledgmentNumber + (tcpPacket.Acknowledgment ? ",valid" : ",invalid") +
+                                            // flags
+                                            "\r\nUrgent pointer: " + (tcpPacket.Urgent ? "valid" : "invalid") +
+                                            "\r\nACK flag: " + (tcpPacket.Acknowledgment ? "1" : "0") + 
+                                            "\r\nPSH flag: " + (tcpPacket.Push ? "1" : "0") + 
+                                            "\r\nRST flag: " + (tcpPacket.Reset ? "1" : "0") +
+                                            "\r\nSYN flag: " + (tcpPacket.Synchronize ? "1" : "0") + 
+                                            "\r\nFIN flag: " + (tcpPacket.Finished ? "1" : "0") +
+                                            "\r\nECN flag: " + (tcpPacket.ExplicitCongestionNotificationEcho ? "1" : "0") +
+                                            "\r\nCWR flag: " + (tcpPacket.CongestionWindowReduced ? "1" : "0") +
+                                            "\r\nNS flag: " + (tcpPacket.NonceSum ? "1" : "0");
+                        }
+                    }
+                    break;
+                case "Udp":
+                    if (getPacket)
+                    {
+                        UdpPacket udpPacket = packet.Extract<UdpPacket>();
+                        if (udpPacket != null)
+                        {
+                            textBox_info.Text = "Packet number: " + key +
+                                            " Type: UDP" +
+                                            "\r\nSource port:" + udpPacket.SourcePort +
+                                            "\r\nDestination port: " + udpPacket.DestinationPort +
+                                            "\r\nChecksum:" + udpPacket.Checksum.ToString() + " valid: " + udpPacket.ValidChecksum +
+                                            "\r\nValid UDP checksum: " + udpPacket.ValidUdpChecksum;
+                        }
+                    }
+                    break;
+                case "Arp":
+                    if (getPacket)
+                    {
+                        ArpPacket arpPacket = packet.Extract<ArpPacket>();
+                        if (arpPacket != null)
+                        {
+                            System.Net.IPAddress senderAddress = arpPacket.SenderProtocolAddress;
+                            System.Net.IPAddress targerAddress = arpPacket.TargetProtocolAddress;
+                            System.Net.NetworkInformation.PhysicalAddress senderHardwareAddress = arpPacket.SenderHardwareAddress;
+                            System.Net.NetworkInformation.PhysicalAddress targerHardwareAddress = arpPacket.TargetHardwareAddress;
+
+                            textBox_info.Text = "Packet number: " + key +
+                                            " Type: ARP" +
+                                            "\r\nHardware address length:" + arpPacket.HardwareAddressLength +
+                                            "\r\nProtocol address length: " + arpPacket.ProtocolAddressLength +
+                                            "\r\nOperation: " + arpPacket.Operation.ToString() + 
+                                            "\r\nSender protocol address: " + senderAddress +
+                                            "\r\nTarget protocol address: " + targerAddress +
+                                            "\r\nSender hardware address: " + senderHardwareAddress +
+                                            "\r\nTarget hardware address: " + targerHardwareAddress;
+                        }
+                    }
+                    break;
+                case "Icmp":
+                    if (getPacket)
+                    {
+                        IcmpV4Packet icmpPacket = packet.Extract<IcmpV4Packet>();
+                        if (icmpPacket != null)
+                        {
+                            textBox_info.Text = "Packet number: " + key +
+                                            " Type: ICMP v4" +
+                                            "\r\nType Code: 0x" + icmpPacket.TypeCode.ToString("x") +
+                                            "\r\nChecksum: " + icmpPacket.Checksum.ToString("x") +
+                                            "\r\nID: 0x" + icmpPacket.Id.ToString("x") +
+                                            "\r\nSequence number: " + icmpPacket.Sequence.ToString("x");
+                        }
+                    }
+                    break;
+                case "Igmp":
+                    if (getPacket)
+                    {
+                        IgmpV2Packet igmpPacket = packet.Extract<IgmpV2Packet>();
+                        if (igmpPacket != null)
+                        {
+                            textBox_info.Text = "Packet number: " + key +
+                                            " Type: IGMP v2" +
+                                            "\r\nType: " + igmpPacket.Type +
+                                            "\r\nGroup address: " + igmpPacket.GroupAddress +
+                                            "\r\nMax response time" + igmpPacket.MaxResponseTime;
+                        }
+                    }
+                    break;
+                default:
+                    textBox_info.Text = "";
+                    break;
+            }
         }
     }
 }
