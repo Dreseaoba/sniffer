@@ -35,9 +35,6 @@
             this.textBox_cf = new System.Windows.Forms.TextBox();
             this.button_start = new System.Windows.Forms.Button();
             this.button_stop = new System.Windows.Forms.Button();
-            this.button_display = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox_df = new System.Windows.Forms.TextBox();
             this.listView = new System.Windows.Forms.ListView();
             this.Id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Time = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -49,6 +46,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label_warn_device = new System.Windows.Forms.Label();
             this.label_debug = new System.Windows.Forms.Label();
+            this.button_tcp = new System.Windows.Forms.Button();
+            this.label_warn_filter = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -114,31 +113,6 @@
             this.button_stop.UseVisualStyleBackColor = true;
             this.button_stop.Click += new System.EventHandler(this.button_stop_Click);
             // 
-            // button_display
-            // 
-            this.button_display.Location = new System.Drawing.Point(627, 124);
-            this.button_display.Name = "button_display";
-            this.button_display.Size = new System.Drawing.Size(75, 25);
-            this.button_display.TabIndex = 2;
-            this.button_display.Text = "Display";
-            this.button_display.UseVisualStyleBackColor = true;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(25, 104);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(127, 15);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Display filters";
-            // 
-            // textBox_df
-            // 
-            this.textBox_df.Location = new System.Drawing.Point(28, 124);
-            this.textBox_df.Name = "textBox_df";
-            this.textBox_df.Size = new System.Drawing.Size(592, 25);
-            this.textBox_df.TabIndex = 4;
-            // 
             // listView
             // 
             this.listView.AutoArrange = false;
@@ -152,7 +126,7 @@
             this.listView.FullRowSelect = true;
             this.listView.GridLines = true;
             this.listView.HideSelection = false;
-            this.listView.Location = new System.Drawing.Point(28, 165);
+            this.listView.Location = new System.Drawing.Point(28, 131);
             this.listView.MultiSelect = false;
             this.listView.Name = "listView";
             this.listView.Size = new System.Drawing.Size(1004, 277);
@@ -192,18 +166,18 @@
             // 
             // textBox_info
             // 
-            this.textBox_info.Location = new System.Drawing.Point(28, 477);
+            this.textBox_info.Location = new System.Drawing.Point(28, 440);
             this.textBox_info.Multiline = true;
             this.textBox_info.Name = "textBox_info";
             this.textBox_info.ReadOnly = true;
             this.textBox_info.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox_info.Size = new System.Drawing.Size(1004, 184);
+            this.textBox_info.Size = new System.Drawing.Size(1004, 221);
             this.textBox_info.TabIndex = 6;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(25, 459);
+            this.label4.Location = new System.Drawing.Point(25, 422);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(103, 15);
             this.label4.TabIndex = 3;
@@ -223,11 +197,33 @@
             // label_debug
             // 
             this.label_debug.AutoSize = true;
-            this.label_debug.Location = new System.Drawing.Point(334, 49);
+            this.label_debug.Location = new System.Drawing.Point(25, 113);
             this.label_debug.Name = "label_debug";
             this.label_debug.Size = new System.Drawing.Size(95, 15);
             this.label_debug.TabIndex = 7;
             this.label_debug.Text = "DebugOutput";
+            // 
+            // button_tcp
+            // 
+            this.button_tcp.Location = new System.Drawing.Point(892, 69);
+            this.button_tcp.Name = "button_tcp";
+            this.button_tcp.Size = new System.Drawing.Size(140, 25);
+            this.button_tcp.TabIndex = 2;
+            this.button_tcp.Text = "TCP Stream";
+            this.button_tcp.UseVisualStyleBackColor = true;
+            this.button_tcp.Visible = false;
+            this.button_tcp.Click += new System.EventHandler(this.button_tcp_Click);
+            // 
+            // label_warn_filter
+            // 
+            this.label_warn_filter.AutoSize = true;
+            this.label_warn_filter.ForeColor = System.Drawing.Color.Red;
+            this.label_warn_filter.Location = new System.Drawing.Point(181, 49);
+            this.label_warn_filter.Name = "label_warn_filter";
+            this.label_warn_filter.Size = new System.Drawing.Size(119, 15);
+            this.label_warn_filter.TabIndex = 0;
+            this.label_warn_filter.Text = "Filter illegal";
+            this.label_warn_filter.Visible = false;
             // 
             // Form1
             // 
@@ -237,16 +233,15 @@
             this.Controls.Add(this.label_debug);
             this.Controls.Add(this.textBox_info);
             this.Controls.Add(this.listView);
-            this.Controls.Add(this.textBox_df);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.textBox_cf);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.button_display);
+            this.Controls.Add(this.button_tcp);
             this.Controls.Add(this.button_stop);
             this.Controls.Add(this.button_start);
             this.Controls.Add(this.button_device);
             this.Controls.Add(this.comboBox_device);
+            this.Controls.Add(this.label_warn_filter);
             this.Controls.Add(this.label_warn_device);
             this.Controls.Add(this.label1);
             this.Name = "Form1";
@@ -266,9 +261,6 @@
         private System.Windows.Forms.TextBox textBox_cf;
         private System.Windows.Forms.Button button_start;
         private System.Windows.Forms.Button button_stop;
-        private System.Windows.Forms.Button button_display;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox_df;
         private System.Windows.Forms.ListView listView;
         private System.Windows.Forms.ColumnHeader Id;
         private System.Windows.Forms.ColumnHeader Time;
@@ -280,6 +272,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label_warn_device;
         private System.Windows.Forms.Label label_debug;
+        private System.Windows.Forms.Button button_tcp;
+        private System.Windows.Forms.Label label_warn_filter;
     }
 }
 
