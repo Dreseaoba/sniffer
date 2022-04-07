@@ -22,6 +22,7 @@ namespace sniffer
         Thread sniffing;
         private int packetId = 0;
         private Dictionary<int, RawCapture> capturedPackets_list = new Dictionary<int, RawCapture>();
+        private Dictionary<int, string> timestamp_list = new Dictionary<int, string>();
 
         public Form1()
         {
@@ -109,6 +110,7 @@ namespace sniffer
 
             RawCapture capture = e.GetPacket();
             capturedPackets_list.Add(packetId, capture);
+            timestamp_list.Add(packetId, time_str);
             Packet packet = capture.GetPacket();
             IPPacket ipPacket = packet.Extract<IPPacket>();
 
@@ -294,7 +296,39 @@ namespace sniffer
 
         private void button_tcp_Click(object sender, EventArgs e)
         {
+            var item = this.listView.SelectedItems[0];
+            string srcIP = item.SubItems[2].Text;
+            string dstIP = item.SubItems[3].Text;
+            int key = Int32.Parse(item.SubItems[0].Text);
+            RawCapture capture;
+            bool getPacket = capturedPackets_list.TryGetValue(key, out capture);
+            if (getPacket)
+            {
+                Packet packet = capture.GetPacket();
+                this.button_tcp.Visible = true;
+                TcpPacket tcpPacket = packet.Extract<TcpPacket>();
+                if (tcpPacket != null)
+                {
+                    ushort srcPort = tcpPacket.SourcePort;
+                    ushort dstPort = tcpPacket.DestinationPort;
+                    FormTcp formTcp = new FormTcp(this.capturedPackets_list, this.timestamp_list, srcIP, dstIP, srcPort, dstPort);
+                    formTcp.ShowDialog();
+                }
+            }
+        }
 
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (sniffing != null)
+            {
+                if (sniffing.IsAlive)
+                {
+                    sniffing.Abort();
+                }
+            }
+
+            device.StopCapture();
+            device.Close();
         }
     }
 }
