@@ -45,7 +45,6 @@
             this.textBox_info = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label_warn_device = new System.Windows.Forms.Label();
-            this.label_debug = new System.Windows.Forms.Label();
             this.button_tcp = new System.Windows.Forms.Button();
             this.label_warn_filter = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -194,15 +193,6 @@
             this.label_warn_device.Text = "Device can\'t be void";
             this.label_warn_device.Visible = false;
             // 
-            // label_debug
-            // 
-            this.label_debug.AutoSize = true;
-            this.label_debug.Location = new System.Drawing.Point(25, 113);
-            this.label_debug.Name = "label_debug";
-            this.label_debug.Size = new System.Drawing.Size(95, 15);
-            this.label_debug.TabIndex = 7;
-            this.label_debug.Text = "DebugOutput";
-            // 
             // button_tcp
             // 
             this.button_tcp.Location = new System.Drawing.Point(892, 69);
@@ -230,7 +220,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1062, 673);
-            this.Controls.Add(this.label_debug);
             this.Controls.Add(this.textBox_info);
             this.Controls.Add(this.listView);
             this.Controls.Add(this.label4);
@@ -272,7 +261,6 @@
         private System.Windows.Forms.TextBox textBox_info;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label_warn_device;
-        private System.Windows.Forms.Label label_debug;
         private System.Windows.Forms.Button button_tcp;
         private System.Windows.Forms.Label label_warn_filter;
     }
